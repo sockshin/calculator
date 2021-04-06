@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Sockulator</title>
+</head>
+<body>
+    <div class="center">
+        <div class="calcWrapper">
+            <div class="display" id="display"></div>    
+            <button class="buttons back" onclick="backspace()">Back</button>
+            <button class="buttons clear" onclick="clearDisplay()">Clear</button>
+            <button class="buttons seven" value="7" onclick="number(this.value)">7</button>
+            <button class="buttons eight" value="8" onclick="number(this.value)">8</button>
+            <button class="buttons nine" value="9" onclick="number(this.value)">9</button>
+            <button class="buttons four" value="4" onclick="number(this.value)">4</button>
+            <button class="buttons five" value="5" onclick="number(this.value)">5</button>
+            <button class="buttons six" value="6" onclick="number(this.value)">6</button>
+            <button class="buttons one" value="1" onclick="number(this.value)">1</button>
+            <button class="buttons two" value="2" onclick="number(this.value)">2</button>
+            <button class="buttons three" value="3" onclick="number(this.value)">3</button>
+            <button class="buttons zero" value="0" onclick="number(this.value)">0</button>
+            <button class="buttons point" value="." onclick="number(this.value)" id="point">.</button>
+            <button class="buttons equals" onclick="equals()">=</button>
+            <button class="buttons divide operator" value="/" onclick="setOperator(this.value)">/</button>
+            <button class="buttons multiply operator" value="x" onclick="setOperator(this.value)">X</button>
+            <button class="buttons minus operator"value="-" onclick="setOperator(this.value)">-</button>
+            <button class="buttons plus operator" value="+" onclick="setOperator(this.value)">+</button>
+        </div>
+   </div>
+    
+</body>
+</html>
+
+<script>
+let calcDisplay = document.getElementById("display");
+let display;
+let currentNumber = '';
+let firstNumber = '';
+let operator = '';
+let calculatedNum;
+let decimal;
+// Boolean flags for determining order of operations
+let startNewNumberFlag = false; //determines if number function button presses call should start a new number
+let newNumberFlag = false; //after the = has been pressed, that number can be used in the next operation, stored in first number.
+let equalsLastFunctionRan = false;
+let oneRem = "1rem"
+let twoRem = "2rem"
+let fourRem = "4rem"
+// setting up @media queries
+let screenWidthFourEighty = window.matchMedia("(max-width: 480px)")
+changeFontSizeWindow(screenWidthFourEighty) // Call listener function at run time once to set variables
+screenWidthFourEighty.addListener(changeFontSizeWindow) // Attach listener function on state changes
+
+
+//-------------------------------------------------NEW FUNCTION-------------------------------------------------//
+function equals(){
+    //DO NOT ALLOW EQUALS BUTTON IF NO OPERATOR HAS BEEN SET
+    if (operator == '' || newNumberFlag == false){
+        return;
+    }
+    if (currentNumber == "."){
+        return
+    }
+    // PERFORM THE OPERATION USING THE FIRST NUMBER AND THE CURRENT NUMBER.
+   operate(operator, firstNumber, currentNumber)
+    //RESET THE FLAGS
+   startNewNumberFlag = true
+   operator = ''
+   equalsLastFunctionRan = true;
+   newNumberFlag = false;
+
+}
+
+//-------------------------------------------------NEW FUNCTION-------------------------------------------------//
+function setOperator(operatorChange){
+
+    document.getElementById("point").disabled = false; //ENABLE THE "." BUTTON AFTER AN OPERATOR HAS BEEN SET
+    //SIMPLE CHECKS TO NOT BREAK THE CALCULATOR
+    if (currentNumber == "."){
+        return
+    }
+    if (currentNumber == "" && operatorChange != "-"){
+        return
+    }
+    if (currentNumber == "-" && operatorChange == "-"){
+        return
+    }
+
+    //ALLOWS THE "-" TO MEAN A NEGATIVE NUMBER, NOT ONLY THE MINUS OPERATOR
+    //IF A NEW NUMBER HAS NOT BEEN STARTED, THE CURRENT NUMBER IS BLANK AND THE OPERATOR SELECTED WAS "-"
+    if (newNumberFlag == false && currentNumber == '' && operatorChange == "-"){
+        currentNumber = "-"
+        calcDisplay.textContent = "-"
+        newNumberFlag = true; // INDICATING THE "-" IS THE START OF A NEW NUMBER
+        startNewNumberFlag = false; // FALSE, WHEN A NEW NUMBER IS PRESSED THE "-" BECOMES PART OF THE NEW NUMBER 
+        equalsLastFunctionRan = false;
+        return;
+    }
+
+    calcDisplay.style.fontWeight = "bold" // ONCE AN OPERATOR HAS BEEN PRESSED THE CURRENT DISPLAY IS SET TO BOLD
+    // to set operator after an equals and not run the operate function immediately. 2+3 = 5 -> + ->only sets operator to + allowing new second number.
+    if (equalsLastFunctionRan == true){ 
+        operator = operatorChange
+        equalsLastFunctionRan = false;
+        currentNumber = ''
+        return
+    }
+
+    // if a operator button is pressed after already having 2 seperate numbers and a previous operation. ex: 2+3+   (it will call operate on the 2+3)
+    if (operator != '' && newNumberFlag == true){
+        operate(operator, firstNumber, currentNumber)
+    }
+
+    // stores first number & new number when 1st number after = has been pressed, but screen not cleared
+    if (startNewNumberFlag == false){     
+        firstNumber = calcDisplay.textContent;
+        startNewNumberFlag = true;
+    }
+    // SETTING FLAGS
+    operator = operatorChange; 
+    newNumberFlag = false; 
+    currentNumber = ''
+
+}
+
+
+//-------------------------------------------------NEW FUNCTION-------------------------------------------------//
+function operate(operator, num1, num2){
+
+    if (operator == "+"){
+        calculatedNum = add(num1, num2)
+    }
+    else if (operator == "-"){
+        calculatedNum = subtract(num1, num2)
+    }
+    else if (operator == "x"){
+        calculatedNum = multiply(num1, num2)
+    }
+    else if (operator == "/"){
+        calculatedNum = divide(num1, num2)
+    }
+
+    sizeCheck(calculatedNum.toString()); //.length method needs a string
+
+    calcDisplay.textContent = calculatedNum; //update display with number
+    operator = ''; //reset the operator
+    firstNumber = calculatedNum; //store the calculated number in a variable in case user wants to perform operation on the number
+    startNewNumberFlag = true; // need to start a new number
+    newNumberFlag = false; //
+    document.getElementById("point").disabled = false; // allow next number to start with a "."
+
+}
+
+//-------------------------------------------------NEW FUNCTION-------------------------------------------------//
+function number(num){
+
+calcDisplay.style.fontWeight = "normal"
+// allows number function to know a new "currentNumber" needs to start
+if (startNewNumberFlag == true){
+    calcDisplay.textContent = ''
+    currentNumber = ''
+    startNewNumberFlag = false;
+}
+
+//after pressing equals, if a number is pressed start a fresh calculator operation
+if (equalsLastFunctionRan == true){
+    clearDisplay();
+    equalsLastFunctionRan = false;
+}
+
+newNumberFlag = true; //true as long as no operation has occured
+
+//update display and the current number variable
+currentNumber = calcDisplay.textContent;
+calcDisplay.textContent = currentNumber + num;
+currentNumber = calcDisplay.textContent;
+
+// disable the . button if one is in the current number.
+decimal = currentNumber.includes(".")
+if (decimal){document.getElementById("point").disabled = true;}
+else{document.getElementById("point").disabled = false;}
+
+//  check length of current number to change font size if neccesary
+sizeCheck(currentNumber);
+}
+
+
+
+//-------------------------------------------------NEW FUNCTION-------------------------------------------------//
+function sizeCheck(Number){
+if (Number.length >= 28){
+    calcDisplay.style.fontSize = oneRem //variables to account for screen size. mobile or desktop/tablet
+    }
+else if (Number.length >= 14){
+    calcDisplay.style.fontSize = twoRem
+    }
+else{
+    calcDisplay.style.fontSize = fourRem
+    }
+}
+
+
+
+//-------------------------------------------------NEW FUNCTION-------------------------------------------------//
+function add(a,b){
+    return ( parseFloat(a) + parseFloat(b))
+}
+
+function subtract(a,b){
+    return(parseFloat(a) - parseFloat(b))
+}
+
+function multiply(a,b){
+    return(parseFloat(a) * parseFloat(b))
+}
+
+function divide(a,b){
+    return(parseFloat(a) / parseFloat(b))
+}
+
+//-------------------------------------------------NEW FUNCTION-------------------------------------------------//
+function clearDisplay(){
+    currentNumber = "";
+    calcDisplay.textContent = '';
+    operator = ''
+    startNewNumberFlag = false;
+    newNumberFlag = false;
+}
+
+//-------------------------------------------------NEW FUNCTION-------------------------------------------------//
+function backspace(){
+    currentNumber = currentNumber.slice(0,-1)
+    calcDisplay.textContent = currentNumber
+    sizeCheck(currentNumber);
+}
+
+//-------------------------------------------------NEW FUNCTION-------------------------------------------------//
+function changeFontSizeWindow(screenWidthFourEighty) {
+  if (screenWidthFourEighty.matches) { // If media query matches
+    oneRem = ".5rem"
+    twoRem = "1rem"
+    fourRem = "2rem"
+  } else {
+    oneRem = "1rem"
+    twoRem = "2rem"
+    fourRem = "4rem"
+  }
+}
+
+</script>

@@ -145,51 +145,11 @@ body{
     background-color:  rgb(134, 133, 197);
 }
 
-@media screen and (min-width: 300px){
 
-    body{
-        margin-top: 10%;
-        margin-bottom: 0px;
-        margin-left: 0px;
-        padding: 0px;
-        background-color: black;
-    }
-    .calcWrapper{
-        margin-left: auto;
-        margin-right: auto;
-        padding-right: 10%;
-        padding-left: 10% ;
-        max-width: 300px;
-        min-width: 300px;        
-    }
-
-    .buttons{
-        height: 4rem;
-        font-size: 2rem;
-    }
-
-    .display{
-        height: 4rem;
-        font-size: 2rem;
-      
-    }
-    .center{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
-
-
-    
-  }
-
-  @media screen and (max-height: 415px) {
+@media only screen and (min-width: 568px) and (orientation: landscape) {
     .calcWrapper{
         max-width: 550px;
-        min-width: 550px;
-        
+        min-width: 550px; 
     }
 
    
@@ -216,5 +176,37 @@ body{
         align-items: center;
         text-align: center;
     }
+}
+
+
+@media only screen and (min-width: 320px) and (orientation: portrait){
+
+    body{
+        margin-top: 10%;
+
+    }
+    .calcWrapper{
+        max-width: 300px;
+        min-width: 300px;        
+    }
+
+    .buttons{
+        height: 4rem;
+        font-size: 2rem;
+    }
+
+    .display{
+        height: 4rem;
+        font-size: 2rem;
+      
+    }
+    .center{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
     
-  }
+}
+  

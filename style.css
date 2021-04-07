@@ -1,8 +1,7 @@
 body{
     margin-top: 100px;
     background-color: rgb(84, 79, 97);
-    color: rgb(34, 34, 34);
-    
+    color: rgb(34, 34, 34);   
 
 }
 
@@ -15,6 +14,7 @@ body{
 }
 
 .calcWrapper{
+    padding: 0px;
     max-width: 600px;
     min-width: 600px;
     display: grid;
@@ -145,9 +145,11 @@ body{
     background-color:  rgb(134, 133, 197);
 }
 
-@media only screen and (min-width: 300px) and (max-width: 767px) {
+@media only screen and (max-width: 425px){
 
     .calcWrapper{
+        margin: 0px;
+        padding: 0px;
         max-width: 300px;
         min-width: 300px;        
     }
@@ -166,6 +168,13 @@ body{
         height: 4rem;
         font-size: 2rem;
       
+    }
+    .center{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
     }
 
 

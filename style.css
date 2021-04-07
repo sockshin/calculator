@@ -149,12 +149,12 @@ body{
 
 @media screen and (max-width: 600px) {
     body{
-        margin-top: 200px;
+        margin-top: 20%;
         margin-bottom: 0px;
     }
     .calcWrapper{
-        max-width: 350px;
-        min-width: 350px;
+        max-width: 320px;
+        min-width: 320px;
               
     }
 
@@ -176,18 +176,17 @@ body{
   @media screen and (max-height: 415px) {
    
     body{
-        margin-top: 3%;
+        margin-top:8%;
         margin-bottom: 0px;
     }
     .buttons{
-
-        height: 3rem;
-        font-size: 2rem;
+        height: 2.5rem;
+        font-size: 1.5rem;
     }
 
     .display{
-        height: 4rem;
-        font-size: 2rem;     
+        height: 3rem;
+        font-size: 1.5rem;     
     }
 
     .calcWrapper{

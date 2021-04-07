@@ -145,7 +145,7 @@ body{
     background-color:  rgb(134, 133, 197);
 }
 
-@media only screen and (max-width: 425px){
+@media screen and (max-height: 815px){
 
     .calcWrapper{
         margin: 0px;
@@ -154,9 +154,10 @@ body{
         min-width: 300px;        
     }
     body{
-        margin-top: 20%;
+        margin-top: 10%;
         margin-bottom: 0px;
         margin-left: 0px;
+        padding: 0px;
     }
 
     .buttons{

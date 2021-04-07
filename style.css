@@ -147,18 +147,20 @@ body{
 
 @media screen and (min-width: 300px){
 
-    .calcWrapper{
-        margin: 0px;
-        padding: 0px;
-        max-width: 300px;
-        min-width: 300px;        
-    }
     body{
         margin-top: 10%;
         margin-bottom: 0px;
         margin-left: 0px;
         padding: 0px;
         background-color: black;
+    }
+    .calcWrapper{
+        margin-left: auto;
+        margin-right: auto;
+        padding-right: 10%;
+        padding-left: 10% ;
+        max-width: 300px;
+        min-width: 300px;        
     }
 
     .buttons{

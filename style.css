@@ -148,8 +148,8 @@ body{
 @media screen and (max-width: 420px) {
 
     .calcWrapper{
-        max-width: 300px;
-        min-width: 300px;        
+        max-width: 200px;
+        min-width: 200px;        
     }
     body{
         margin-top: 20%;
@@ -160,7 +160,6 @@ body{
     .buttons{
         height: 4rem;
         font-size: 2rem;
-        color: aqua;
     }
 
     .display{

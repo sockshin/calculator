@@ -15,8 +15,6 @@ body{
 }
 
 .calcWrapper{
-
-
     max-width: 600px;
     min-width: 600px;
     display: grid;
@@ -144,19 +142,18 @@ body{
 
 .clear{
     grid-area: clear;
-    background-color:  rgb(158, 133, 197);
+    background-color:  rgb(134, 133, 197);
 }
 
 @media screen and (max-width: 600px) {
+
+    .calcWrapper{
+        max-width: 300px;
+        min-width: 300px;        
+    }
     body{
         margin-top: 20%;
         margin-bottom: 0px;
-        margin-left: 0px;
-    }
-    .calcWrapper{
-        max-width: 320px;
-        min-width: 320px;
-              
     }
 
     .buttons{
@@ -175,11 +172,17 @@ body{
   }
 
   @media screen and (max-height: 415px) {
+    .calcWrapper{
+        max-width: 550px;
+        min-width: 550px;
+        
+    }
+
    
     body{
-        margin-top:8%;
+        margin-top:5%;
         margin-bottom: 0px;
-        margin-left: 0px;
+
     }
     .buttons{
         height: 2.5rem;
@@ -191,10 +194,13 @@ body{
         font-size: 1.5rem;     
     }
 
-    .calcWrapper{
-        max-width: 600px;
-        min-width: 600px;
-        
+
+    .center{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
     }
     
   }

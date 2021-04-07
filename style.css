@@ -145,7 +145,7 @@ body{
     background-color:  rgb(134, 133, 197);
 }
 
-@media screen and (min-width: 420px) {
+@media screen and (max-width: 370px) {
 
     .calcWrapper{
         max-width: 300px;

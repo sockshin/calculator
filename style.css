@@ -144,13 +144,14 @@ body{
 
 .clear{
     grid-area: clear;
-    background-color:  rgb(134, 133, 197);
+    background-color:  rgb(158, 133, 197);
 }
 
 @media screen and (max-width: 600px) {
     body{
         margin-top: 20%;
         margin-bottom: 0px;
+        margin-left: 0px;
     }
     .calcWrapper{
         max-width: 320px;
@@ -178,6 +179,7 @@ body{
     body{
         margin-top:8%;
         margin-bottom: 0px;
+        margin-left: 0px;
     }
     .buttons{
         height: 2.5rem;

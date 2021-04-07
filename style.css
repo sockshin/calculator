@@ -154,11 +154,13 @@ body{
     body{
         margin-top: 20%;
         margin-bottom: 0px;
+        margin-left: 0px;
     }
 
     .buttons{
         height: 4rem;
         font-size: 2rem;
+        color: aqua;
     }
 
     .display{
